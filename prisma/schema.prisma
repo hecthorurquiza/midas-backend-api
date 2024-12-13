@@ -12,3 +12,117 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String @id @default(uuid())
+  firstName String @map("first_name") @db.VarChar(50)
+  lastName  String @map("last_name") @db.VarChar(100)
+  email     String @unique
+  phone     String @unique @db.VarChar(11)
+  password  String @db.VarChar(200)
+
+  commodities Commodity[]
+  sites       Site[]
+  tokens      Token[]
+  strategies  Strategy[]
+  groupUser   GroupUser[]
+
+  @@map("users")
+}
+
+model Commodity {
+  id     String @id @default(uuid())
+  name   String @db.VarChar(100)
+  code   String @unique @db.VarChar(20)
+  userId String @map("user_id")
+
+  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategies Strategy[]
+
+  @@index([userId])
+  @@map("commodities")
+}
+
+model Site {
+  id         String @id @default(uuid())
+  name       String @db.VarChar(100)
+  urlAddress String @map("url_address") @db.VarChar(200)
+  userId     String @map("user_id")
+
+  User          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategySites StrategySite[]
+
+  @@index([userId])
+  @@map("sites")
+}
+
+model Token {
+  id     String @id @default(uuid())
+  token  String @db.VarChar(100)
+  userId String @map("user_id")
+
+  User           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategyTokens StrategyToken[]
+
+  @@index([userId])
+  @@map("tokens")
+}
+
+model Strategy {
+  id          String @id @default(uuid())
+  name        String @db.VarChar(100)
+  commodityId String @map("commodity_id")
+  userId      String @map("user_id")
+
+  Commodity      Commodity       @relation(fields: [commodityId], references: [id])
+  User           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategyTokens StrategyToken[]
+  strategySites  StrategySite[]
+
+  @@index([commodityId, userId])
+  @@map("strategies")
+}
+
+model StrategyToken {
+  strategyId String @map("strategy_id")
+  tokenId    String @map("token_id")
+
+  Strategy Strategy @relation(fields: [strategyId], references: [id])
+  Token    Token    @relation(fields: [tokenId], references: [id])
+
+  @@id([strategyId, tokenId])
+  @@index([strategyId, tokenId])
+  @@map("strategy_tokens")
+}
+
+model StrategySite {
+  strategyId String @map("strategy_id")
+  siteId     String @map("site_id")
+
+  Strategy Strategy @relation(fields: [strategyId], references: [id])
+  Site     Site     @relation(fields: [siteId], references: [id])
+
+  @@id([strategyId, siteId])
+  @@index([strategyId, siteId])
+  @@map("strategy_sites")
+}
+
+model Group {
+  id         String      @id @default(uuid())
+  name       String      @db.VarChar(100)
+  groupUsers GroupUser[]
+
+  @@map("groups")
+}
+
+model GroupUser {
+  groupId String @map("group_id")
+  userId  String @map("user_id")
+
+  Group Group @relation(fields: [groupId], references: [id])
+  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, userId])
+  @@index([groupId, userId])
+  @@map("group_participants")
+}
