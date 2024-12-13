@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules --env-file=.env src/server.ts",
     "lint": "eslint src/*.{ts,json}",
     "start": "prisma migrate dev && prisma db seed && npm run dev"
   },
@@ -17,7 +17,7 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "@types/express": "4.17.12",
     "@types/node": "^22.9.1",
     "eslint": "^9.15.0",
     "prettier": "^2.7.1",
@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.1"
   }
