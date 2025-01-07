@@ -8,8 +8,8 @@ export class CreateUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const createReq = req.body as ICreateUserRequestDTO
 
-    if (!createReq.firstName) return res.status(400).json({ error: 'Nome é obrigatório' })
-    if (!createReq.lastName) return res.status(400).json({ error: 'Sobrenome é obrigatório' })
+    if (!createReq.first_name) return res.status(400).json({ error: 'Nome é obrigatório' })
+    if (!createReq.last_name) return res.status(400).json({ error: 'Sobrenome é obrigatório' })
     if (!createReq.email) return res.status(400).json({ error: 'Email é obrigatório' })
     if (!createReq.phone) return res.status(400).json({ error: 'Telefone é obrigatório' })
     if (!createReq.password) return res.status(400).json({ error: 'Senha é obrigatória' })
