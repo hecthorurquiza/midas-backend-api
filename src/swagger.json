@@ -1,0 +1,103 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MIDAS API",
+    "description": "BackEnd API MIDAS",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "API para teste e desenvolvimento"
+    }
+  ],
+  "paths":{
+    "/user": {
+      "post": {
+        "summary": "Criar um novo usuário",
+        "description": "Cria um novo usuário no sistema",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": { "type": "string" },
+                "last_name": { "type": "string" },
+                "email": { "type": "string" },
+                "phone": { "type": "string" },
+                "password": { "type": "string" }
+              },
+              "required": ["first_name", "last_name", "email", "phone", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+                "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                  "id": { "type": "string" },
+                  "first_name": { "type": "string" },
+                  "last_name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "phone": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

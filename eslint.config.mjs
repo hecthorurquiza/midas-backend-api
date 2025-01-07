@@ -10,7 +10,6 @@ export default tseslint.config(
       'no-useless-escape': ['warn'],
       'no-inner-declarations': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      'no-explicit-any': 'off',
 		  'indent': ['warn', 2 ],
 		  'global-require': 'warn',
 		  'semi': ['warn', 'never'],
