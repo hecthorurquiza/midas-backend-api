@@ -11,4 +11,5 @@ export interface ICommodityRepository {
   findOne(data: IFindOneCommodity): Promise<Commodity | null>
   findManyByUserId(userId: string): Promise<Commodity[] | null>
   update(data: Commodity): Promise<boolean>
+  delete(id: string): Promise<boolean>
 }
