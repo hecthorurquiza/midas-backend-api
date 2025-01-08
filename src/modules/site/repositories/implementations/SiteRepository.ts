@@ -33,4 +33,16 @@ export class SiteRepository implements ISiteRepository {
       return null
     }
   }
+  async findManyByUserId(userId: string): Promise<Site[] | null> {
+    try {
+      const sites = await prismaClient.site.findMany({
+        where: { userId }
+      })
+      return sites.map(site => new Site(site))
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return null
+    }
+  }
 }
