@@ -8,4 +8,5 @@ export interface IFindOneCommodity {
 export interface ICommodityRepository {
   create(data: Commodity): Promise<Commodity | null>
   findOne(data: IFindOneCommodity): Promise<Commodity | null>
+  findManyByUserId(userId: string): Promise<Commodity[] | null>
 }

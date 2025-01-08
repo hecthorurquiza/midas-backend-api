@@ -31,4 +31,16 @@ export class CommodityRepository implements ICommodityRepository {
       return null
     }
   }
+  async findManyByUserId(userId: string): Promise<Commodity[] | null> {
+    try {
+      const commodities = await prismaClient.commodity.findMany({
+        where: { userId }
+      })
+      return commodities.map(commodity => new Commodity(commodity))
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return null
+    }
+  }
 }

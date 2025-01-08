@@ -30,7 +30,7 @@ export class LoginUserUseCase {
   private generateJwtToken(email: string) {
     return jwt.sign({
       data: email,
-      exp: Math.floor(Date.now() / 1000) + (60 * 60)
+      exp: Math.floor(Date.now() / 1000) + (60 * 300)
     }, process.env.JWT_SECRET as string)
   }
 }
