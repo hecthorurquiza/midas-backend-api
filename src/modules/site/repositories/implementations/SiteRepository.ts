@@ -58,4 +58,14 @@ export class SiteRepository implements ISiteRepository {
       return false
     }
   }
+  async delete(id: string): Promise<boolean> {
+    try {
+      await prismaClient.site.delete({ where: { id } })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
