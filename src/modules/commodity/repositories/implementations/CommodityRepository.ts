@@ -57,4 +57,14 @@ export class CommodityRepository implements ICommodityRepository {
       return false
     }
   }
+  async delete(id: string): Promise<boolean> {
+    try {
+      await prismaClient.commodity.delete({ where: { id } })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
