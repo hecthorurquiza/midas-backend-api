@@ -7,4 +7,9 @@ export class Site {
   constructor(data: Partial<Site>) {
     Object.assign(this, data)
   }
+
+  update(name: string, urlAddress: string) {
+    this.name = name
+    this.urlAddress = urlAddress
+  }
 }

@@ -10,4 +10,5 @@ export interface ISiteRepository {
   create(data: Site): Promise<Site | null>
   findOne(data: IFindOneSite): Promise<Site | null>
   findManyByUserId(userId: string): Promise<Site[] | null>
+  update(data: Site): Promise<boolean>
 }
