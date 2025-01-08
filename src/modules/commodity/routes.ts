@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import { createCommodityController } from './useCase/createCommodity'
+import { validateToken } from '~/middlewares/validateToken'
 
 const router = Router()
 
-router.post('/',
+router.post('/', validateToken,
   (req, res) => createCommodityController.handle(req, res)
 )
 
