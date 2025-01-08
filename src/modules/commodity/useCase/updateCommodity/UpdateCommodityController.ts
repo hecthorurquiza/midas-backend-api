@@ -13,7 +13,10 @@ export class UpdateCommodityController {
     if (!bodyReq.code) return res.status(400).json({ error: 'Código é obrigatório' })
 
     try {
-      const commodity = await this.updateCommodityUseCase.execute(id, bodyReq)
+      const commodity = await this.updateCommodityUseCase.execute(id, {
+        name: bodyReq.name.toUpperCase(),
+        code: bodyReq.code.toUpperCase()
+      })
       return res.status(200).json(commodity)
     }
     catch (error: any) {
