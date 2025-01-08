@@ -45,4 +45,17 @@ export class SiteRepository implements ISiteRepository {
       return null
     }
   }
+  async update(data: Site): Promise<boolean> {
+    try {
+      await prismaClient.site.update({
+        where: { id: data.id },
+        data
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
