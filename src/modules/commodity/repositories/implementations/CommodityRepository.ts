@@ -19,6 +19,7 @@ export class CommodityRepository implements ICommodityRepository {
         where: {
           OR: [
             { id: data.id },
+            { name: data.name },
             { code: data.code }
           ]
         }
@@ -41,6 +42,19 @@ export class CommodityRepository implements ICommodityRepository {
     catch (error: any) {
       console.error(error.message)
       return null
+    }
+  }
+  async update(data: Commodity): Promise<boolean> {
+    try {
+      await prismaClient.commodity.update({
+        where: { id: data.id },
+        data
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
     }
   }
 }

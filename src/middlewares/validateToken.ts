@@ -9,7 +9,6 @@ export function validateToken(req: Request, res: Response, next: NextFunction) {
 
   try {
     const payLoad = jwt.verify(token, process.env.JWT_SECRET as string)
-    console.log('Token válido ', payLoad)
     next()
   }
   catch (error: any) {

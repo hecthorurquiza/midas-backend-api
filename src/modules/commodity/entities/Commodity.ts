@@ -7,4 +7,9 @@ export class Commodity {
   constructor(data: Partial<Commodity>) {
     Object.assign(this, data)
   }
+
+  update(name: string, code: string) {
+    this.name = name
+    this.code = code
+  }
 }
