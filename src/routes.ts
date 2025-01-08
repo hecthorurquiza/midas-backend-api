@@ -1,9 +1,11 @@
 import { Router, Response } from 'express'
 
-import { userRoutes } from './modules/user/useCase/routes'
+import { commodityRoutes } from './modules/commodity/routes'
+import { userRoutes } from './modules/user/routes'
 
 const router = Router()
 
+router.use('/commodity', commodityRoutes)
 router.use('/user', userRoutes)
 
 router.get('/health', (_, res: Response) => {
