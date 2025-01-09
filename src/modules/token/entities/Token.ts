@@ -6,4 +6,8 @@ export class Token {
   constructor(data: Partial<Token>) {
     Object.assign(this, data)
   }
+
+  update(token: string) {
+    this.token = token
+  }
 }
