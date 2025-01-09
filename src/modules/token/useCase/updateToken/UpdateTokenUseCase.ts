@@ -3,7 +3,7 @@ import { ITokenRepository } from '../../repositories/ITokenRepository'
 import { IUpdateTokenResponseDTO } from './UpdateTokenDTO'
 
 export class UpdateTokenUseCase {
-  constructor(private tokenRepository: ITokenRepository) {}
+  constructor(private readonly tokenRepository: ITokenRepository) {}
 
   async execute(tokenId: string, newToken: string): Promise<IUpdateTokenResponseDTO> {
     const token = await this.validateData(tokenId, newToken)
