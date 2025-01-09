@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { UpdateSiteUseCase } from './UpdateSiteUseCase'
 import { IUpdateSiteRequestDTO } from './UpdateSiteDTO'
+import { badRequest, conflict, internalServerError, notFound, ok } from '~/utils/httpResponse'
+import { validateUrl } from '~/utils/validateUrl'
 
 export class UpdateSiteController {
   constructor(private readonly updateSiteUseCase: UpdateSiteUseCase) {}
@@ -9,34 +11,23 @@ export class UpdateSiteController {
     const { id } = req.params
     const bodyReq = req.body as IUpdateSiteRequestDTO
 
-    if (!bodyReq.name) return res.status(400).json({ error: 'Nome da commodity é obrigatório' })
-    if (!bodyReq.url_address) return res.status(400).json({ error: 'URL é obrigatório' })
+    if (!bodyReq.name) return badRequest(res, 'Nome é obrigatório')
+    if (!bodyReq.url_address) return badRequest(res, 'URL é obrigatória')
 
-    const isValidUrl = this.validateUrl(bodyReq.url_address)
-    if (!isValidUrl) return res.status(400).json({ error: 'URL inválida' })
+    const isValidUrl = validateUrl(bodyReq.url_address)
+    if (!isValidUrl) return badRequest(res, 'URL inválida')
 
     try {
       const site = await this.updateSiteUseCase.execute(id, {
         ...bodyReq,
         name: bodyReq.name.toUpperCase()
       })
-      return res.status(200).send(site)
+      return ok(res, site)
     }
     catch (error: any) {
-      if (error.message.includes('já cadastrad')) return res.status(409).json({ error: error.message })
-      if (error.message.includes('não encontrado')) return res.status(404).json({ error: error.message })
-      return res.status(500).json({ error: error.message })
-    }
-  }
-
-  private validateUrl(url: string) {
-    try {
-      new URL(url)
-      return true
-    }
-    catch (error: any) {
-      console.log(error.message)
-      return false
+      if (error.message.includes('já cadastrad')) return conflict(res, error.message)
+      if (error.message.includes('não encontrado')) return notFound(res, error.message)
+      return internalServerError(res, error.message)
     }
   }
 }

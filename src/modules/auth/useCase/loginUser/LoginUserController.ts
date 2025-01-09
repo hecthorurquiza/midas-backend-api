@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { LoginUserUseCase } from './LoginUserUseCase'
 import { ILoginUserRequestDTO } from './LoginUserDTO'
+import { badRequest, internalServerError, notFound, ok } from '~/utils/httpResponse'
 
 export class LoginUserController {
   constructor(private readonly loginUserUseCase: LoginUserUseCase) {}
@@ -8,17 +9,17 @@ export class LoginUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const bodyReq = req.body as ILoginUserRequestDTO
 
-    if (!bodyReq.email) return res.status(400).json({ error: 'Email é obrigatório' })
-    if (!bodyReq.password) return res.status(400).json({ error: 'Senha é obrigatório' })
+    if (!bodyReq.email) return badRequest(res, 'Email é obrigatório')
+    if (!bodyReq.password) return badRequest(res, 'Senha é obrigatória')
 
     try {
       const login = await this.loginUserUseCase.execute(bodyReq)
-      return res.status(200).json(login)
+      return ok(res, login)
     }
     catch (error: any) {
-      if (error.message.includes('não encontrado')) return res.status(404).json({ error: error.message })
-      if (error.message.includes('incorreta')) return res.status(400).json({ error: error.message })
-      return res.status(500).json({ error: error.message })
+      if (error.message.includes('não encontrado')) return notFound(res, error.message)
+      if (error.message.includes('incorreta')) return badRequest(res, error.message)
+      return internalServerError(res, error.message)
     }
   }
 }

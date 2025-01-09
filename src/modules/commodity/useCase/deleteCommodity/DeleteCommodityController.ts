@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { DeleteCommodityUseCase } from './DeleteCommodityUseCase'
+import { internalServerError, noContent, notFound } from '~/utils/httpResponse'
 
 export class DeleteCommodityController {
   constructor(private readonly deleteCommodityUseCase: DeleteCommodityUseCase) {}
@@ -9,11 +10,11 @@ export class DeleteCommodityController {
 
     try {
       await this.deleteCommodityUseCase.execute(id)
-      return res.status(204).send()
+      return noContent(res)
     }
     catch (error: any) {
-      if (error.message.includes('não encontrado')) return res.status(404).json({ message: error.message })
-      return res.status(500).json({ message: error.message })
+      if (error.message.includes('não encontrado')) return notFound(res, error.message)
+      return internalServerError(res, error.message)
     }
 
   }

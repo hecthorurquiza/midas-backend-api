@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { DeleteSiteUseCase } from './DeleteSiteUseCase'
+import { internalServerError, noContent, notFound } from '~/utils/httpResponse'
 
 export class DeleteSiteController {
   constructor(private readonly deleteSiteUseCase: DeleteSiteUseCase) {}
@@ -9,11 +10,11 @@ export class DeleteSiteController {
 
     try {
       await this.deleteSiteUseCase.execute(id)
-      return res.status(204).send()
+      return noContent(res)
     }
     catch (error: any) {
-      if (error.message.includes('não encontrado')) return res.status(404).json({ error: error.message })
-      return res.status(500).json({ error: error.message })
+      if (error.message.includes('não encontrado')) return notFound(res, error.message)
+      return internalServerError(res, error.message)
     }
   }
 }

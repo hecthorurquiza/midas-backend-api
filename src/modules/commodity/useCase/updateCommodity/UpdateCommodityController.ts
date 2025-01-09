@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { UpdateCommodityUseCase } from './UpdateCommodityUseCase'
 import { IUpdateCommodityRequestDTO } from './UpdateCommodityDTO'
+import { badRequest, conflict, internalServerError, notFound, ok } from '~/utils/httpResponse'
 
 export class UpdateCommodityController {
   constructor(private readonly updateCommodityUseCase: UpdateCommodityUseCase) {}
@@ -9,20 +10,20 @@ export class UpdateCommodityController {
     const { id } = req.params
     const bodyReq = req.body as IUpdateCommodityRequestDTO
 
-    if (!bodyReq.name) return res.status(400).json({ error: 'Nome é obrigatório' })
-    if (!bodyReq.code) return res.status(400).json({ error: 'Código é obrigatório' })
+    if (!bodyReq.name) return badRequest(res, 'Nome é obrigatório')
+    if (!bodyReq.code) return badRequest(res, 'Código é obrigatório')
 
     try {
       const commodity = await this.updateCommodityUseCase.execute(id, {
         name: bodyReq.name.toUpperCase(),
         code: bodyReq.code.toUpperCase()
       })
-      return res.status(200).json(commodity)
+      return ok(res, commodity)
     }
     catch (error: any) {
-      if (error.message.includes('já cadastrado')) return res.status(409).json({ error: error.message })
-      if (error.message.includes('não encontrado')) return res.status(404).json({ error: error.message })
-      return res.status(500).json({ error: error.message })
+      if (error.message.includes('já cadastrado')) return conflict(res, error.message)
+      if (error.message.includes('não encontrado')) return notFound(res, error.message)
+      return internalServerError(res, error.message)
     }
   }
 }
