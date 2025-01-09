@@ -4,7 +4,7 @@ import { badRequest, conflict, internalServerError, notFound, ok } from '~/utils
 import { toTitleCase } from '~/utils/toTitleCase'
 
 export class UpdateTokenController {
-  constructor(private updateTokenUseCase: UpdateTokenUseCase) {}
+  constructor(private readonly updateTokenUseCase: UpdateTokenUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
