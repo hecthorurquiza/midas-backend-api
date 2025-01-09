@@ -32,4 +32,16 @@ export class TokenRepository implements ITokenRepository {
       return null
     }
   }
+  async findManyByUserId(userId: string): Promise<Token[] | null> {
+    try {
+      const tokens = await prismaClient.token.findMany({
+        where: { userId }
+      })
+      return tokens.map(token => new Token(token))
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return null
+    }
+  }
 }
