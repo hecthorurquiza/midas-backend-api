@@ -9,4 +9,5 @@ export interface ITokenRepository {
   create(data: Token): Promise<Token | null>
   findOne(data: IFindOneToken): Promise<Token | null>
   findManyByUserId(userId: string): Promise<Token[] | null>
+  update(data: Token): Promise<boolean>
 }

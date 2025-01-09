@@ -44,4 +44,17 @@ export class TokenRepository implements ITokenRepository {
       return null
     }
   }
+  async update(data: Token): Promise<boolean> {
+    try {
+      await prismaClient.token.update({
+        where: { id: data.id },
+        data: { token: data.token }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
