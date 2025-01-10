@@ -33,4 +33,17 @@ export class StrategyRepository implements IStrategyRepository {
       return null
     }
   }
+  async findManyByUserId(userId: string): Promise<Strategy[] | null> {
+    try {
+      const strategies = await prismaClient.strategy.findMany({
+        where: { userId },
+        include: { Commodity: true }
+      })
+      return strategies.map(strategy => new Strategy(strategy))
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return null
+    }
+  }
 }
