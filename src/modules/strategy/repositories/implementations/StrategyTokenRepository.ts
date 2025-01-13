@@ -12,4 +12,14 @@ export class StrategyTokenRepository implements IStrategyTokenRepository {
       return false
     }
   }
+  async deleteManyByStrategyId(strategyId: string): Promise<boolean> {
+    try {
+      await prismaClient.strategyToken.deleteMany({ where: { strategyId } })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }

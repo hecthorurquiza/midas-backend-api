@@ -46,4 +46,20 @@ export class StrategyRepository implements IStrategyRepository {
       return null
     }
   }
+  async update(data: Strategy): Promise<boolean> {
+    try {
+      await prismaClient.strategy.update({
+        where: { id: data.id },
+        data: {
+          name: data.name,
+          commodityId: data.commodityId
+        }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
