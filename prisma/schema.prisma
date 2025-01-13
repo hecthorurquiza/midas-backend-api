@@ -87,7 +87,7 @@ model StrategyToken {
   strategyId String @map("strategy_id")
   tokenId    String @map("token_id")
 
-  Strategy Strategy @relation(fields: [strategyId], references: [id])
+  Strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
   Token    Token    @relation(fields: [tokenId], references: [id])
 
   @@id([strategyId, tokenId])
@@ -99,7 +99,7 @@ model StrategySite {
   strategyId String @map("strategy_id")
   siteId     String @map("site_id")
 
-  Strategy Strategy @relation(fields: [strategyId], references: [id])
+  Strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
   Site     Site     @relation(fields: [siteId], references: [id])
 
   @@id([strategyId, siteId])

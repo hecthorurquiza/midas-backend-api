@@ -62,4 +62,14 @@ export class StrategyRepository implements IStrategyRepository {
       return false
     }
   }
+  async delete(id: string): Promise<boolean> {
+    try {
+      await prismaClient.strategy.delete({ where: { id } })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
