@@ -10,4 +10,9 @@ export class Strategy {
   constructor(data: Partial<Strategy>) {
     Object.assign(this, data)
   }
+
+  update(name: string, commodityId: string) {
+    this.name = name
+    this.commodityId = commodityId
+  }
 }
