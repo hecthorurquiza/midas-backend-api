@@ -3,6 +3,7 @@ import { validateToken } from '~/middlewares/validateToken'
 import { createStrategyController } from './useCase/createStrategy'
 import { getUserStrategiesController } from './useCase/getUserStrategies'
 import { updateStrategyController } from './useCase/updateStrategy'
+import { deleteStrategyController } from './useCase/deleteStrategy'
 
 const router = Router()
 
@@ -16,6 +17,10 @@ router.get('/', validateToken,
 
 router.put('/:id', validateToken,
   (req, res) => updateStrategyController.handle(req, res)
+)
+
+router.delete('/:id', validateToken,
+  (req, res) => deleteStrategyController.handle(req, res)
 )
 
 export { router as strategyRoutes }
