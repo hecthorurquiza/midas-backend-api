@@ -21,7 +21,8 @@ export class SiteRepository implements ISiteRepository {
             { id: data.id },
             { name: data.name },
             { urlAddress: data.urlAddress }
-          ]
+          ],
+          userId: data.userId
         }
       })
 

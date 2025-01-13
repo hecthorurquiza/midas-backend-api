@@ -31,7 +31,7 @@ export class CreateCommodityUseCase {
 
   private async validateData(code: string, userId: string) {
     const [codeAlreadyExists, user] = await Promise.all([
-      this.commodityRepository.findOne({ code }),
+      this.commodityRepository.findOne({ code, userId }),
       this.userRepository.findOne({ id: userId })
     ])
 

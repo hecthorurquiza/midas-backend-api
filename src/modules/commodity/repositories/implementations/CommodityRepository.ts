@@ -21,7 +21,8 @@ export class CommodityRepository implements ICommodityRepository {
             { id: data.id },
             { name: data.name },
             { code: data.code }
-          ]
+          ],
+          userId: data.userId
         }
       })
       if (!commodity) return null

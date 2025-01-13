@@ -5,8 +5,8 @@ import { IUpdateTokenResponseDTO } from './UpdateTokenDTO'
 export class UpdateTokenUseCase {
   constructor(private readonly tokenRepository: ITokenRepository) {}
 
-  async execute(tokenId: string, newToken: string): Promise<IUpdateTokenResponseDTO> {
-    const token = await this.validateData(tokenId, newToken)
+  async execute(tokenId: string, userId: string, newToken: string): Promise<IUpdateTokenResponseDTO> {
+    const token = await this.validateData(tokenId, userId, newToken)
     await this.updateToken(token, newToken)
 
     return {
@@ -16,10 +16,10 @@ export class UpdateTokenUseCase {
     }
   }
 
-  private async validateData(tokenId: string, newToken: string) {
+  private async validateData(tokenId: string, userId: string, newToken: string) {
     const [token, tokenAlreadyExists] = await Promise.all([
       this.tokenRepository.findOne({ id: tokenId }),
-      this.tokenRepository.findOne({ token: newToken })
+      this.tokenRepository.findOne({ token: newToken, userId })
     ])
 
     if (!token) throw new Error(`Token de id = ${tokenId} não encontrado`)

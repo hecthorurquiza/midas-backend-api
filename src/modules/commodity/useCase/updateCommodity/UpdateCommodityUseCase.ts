@@ -5,8 +5,8 @@ import { IUpdateCommodityRequestDTO, IUpdateCommodityResponseDTO } from './Updat
 export class UpdateCommodityUseCase {
   constructor(private readonly commodityRepository: ICommodityRepository) {}
 
-  async execute(id: string, data: IUpdateCommodityRequestDTO): Promise<IUpdateCommodityResponseDTO> {
-    const commodity = await this.validateData(id, data)
+  async execute(id: string, userId: string, data: IUpdateCommodityRequestDTO): Promise<IUpdateCommodityResponseDTO> {
+    const commodity = await this.validateData(id, userId, data)
     await this.updateCommodity(commodity, data)
 
     return {
@@ -16,10 +16,10 @@ export class UpdateCommodityUseCase {
     }
   }
 
-  private async validateData(id: string, data: IUpdateCommodityRequestDTO) {
+  private async validateData(id: string, userId: string, data: IUpdateCommodityRequestDTO) {
     const [nameAlreadyExists, codeAlreadyExists, commodity] = await Promise.all([
-      this.commodityRepository.findOne({ name: data.name }),
-      this.commodityRepository.findOne({ code: data.code }),
+      this.commodityRepository.findOne({ name: data.name, userId }),
+      this.commodityRepository.findOne({ code: data.code, userId }),
       this.commodityRepository.findOne({ id })
     ])
 

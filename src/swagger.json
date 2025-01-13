@@ -312,6 +312,15 @@
               "type": "string"
             },
             "description": "ID da commodity"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
           }
         ],
         "requestBody": {
@@ -701,6 +710,15 @@
               "type": "string"
             },
             "description": "ID do site"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
           }
         ],
         "requestBody": {
@@ -1099,6 +1117,15 @@
               "type": "string"
             },
             "description": "ID da estratégia"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
           }
         ],
         "requestBody": {
@@ -1481,6 +1508,15 @@
               "type": "string"
             },
             "description": "ID do token"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
           }
         ],
         "requestBody": {

@@ -8,12 +8,13 @@ export class UpdateTokenController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
+    const { userId } = req.query
     const { new_token } = req.body
 
     if (!new_token) return badRequest(res, 'Token é obrigatório')
 
     try {
-      const token = await this.updateTokenUseCase.execute(id, toTitleCase(new_token))
+      const token = await this.updateTokenUseCase.execute(id, userId as string, toTitleCase(new_token))
       return ok(res, token)
     }
     catch (error: any) {

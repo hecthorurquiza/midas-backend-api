@@ -30,7 +30,7 @@ export class GetUserStrategiesUseCase {
     return strategies.map(strategy => ({
       id: strategy.id,
       name: strategy.name,
-      commodity: strategy.Commodity.name
+      commodity: strategy.commodity.name
     }))
   }
 }

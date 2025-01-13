@@ -4,6 +4,7 @@ export interface IFindOneSite {
   id?: string
   name?: string
   urlAddress?: string
+  userId?: string
 }
 
 export interface ISiteRepository {

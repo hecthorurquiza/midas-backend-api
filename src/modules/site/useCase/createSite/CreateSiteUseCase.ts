@@ -23,8 +23,8 @@ export class CreateSiteUseCase {
 
   private async validateData(data: ICreateSiteRequestDTO) {
     const [nameAlreadyExists, urlAlreadyExists, user] = await Promise.all([
-      this.siteRepository.findOne({ name: data.name }),
-      this.siteRepository.findOne({ urlAddress: data.url_address }),
+      this.siteRepository.findOne({ name: data.name, userId: data.user_id }),
+      this.siteRepository.findOne({ urlAddress: data.url_address, userId: data.user_id }),
       this.userRepository.findOne({ id: data.user_id })
     ])
 

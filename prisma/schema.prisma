@@ -26,6 +26,7 @@ model User {
   tokens      Token[]
   strategies  Strategy[]
   groupUser   GroupUser[]
+  groups      Group[]
 
   @@map("users")
 }
@@ -33,10 +34,10 @@ model User {
 model Commodity {
   id     String @id @default(uuid())
   name   String @db.VarChar(100)
-  code   String @unique @db.VarChar(20)
+  code   String @db.VarChar(20)
   userId String @map("user_id")
 
-  User       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   strategies Strategy[]
 
   @@index([userId])
@@ -49,7 +50,7 @@ model Site {
   urlAddress String @map("url_address") @db.VarChar(200)
   userId     String @map("user_id")
 
-  User          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   strategySites StrategySite[]
 
   @@index([userId])
@@ -61,7 +62,7 @@ model Token {
   token  String @db.VarChar(100)
   userId String @map("user_id")
 
-  User           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   strategyTokens StrategyToken[]
 
   @@index([userId])
@@ -74,8 +75,8 @@ model Strategy {
   commodityId String @map("commodity_id")
   userId      String @map("user_id")
 
-  Commodity      Commodity       @relation(fields: [commodityId], references: [id])
-  User           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commodity      Commodity       @relation(fields: [commodityId], references: [id])
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   strategyTokens StrategyToken[]
   strategySites  StrategySite[]
 
@@ -87,8 +88,8 @@ model StrategyToken {
   strategyId String @map("strategy_id")
   tokenId    String @map("token_id")
 
-  Strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
-  Token    Token    @relation(fields: [tokenId], references: [id])
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  token    Token    @relation(fields: [tokenId], references: [id], onDelete: Cascade)
 
   @@id([strategyId, tokenId])
   @@index([strategyId, tokenId])
@@ -99,8 +100,8 @@ model StrategySite {
   strategyId String @map("strategy_id")
   siteId     String @map("site_id")
 
-  Strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
-  Site     Site     @relation(fields: [siteId], references: [id])
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  site     Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@id([strategyId, siteId])
   @@index([strategyId, siteId])
@@ -108,8 +109,12 @@ model StrategySite {
 }
 
 model Group {
-  id         String      @id @default(uuid())
-  name       String      @db.VarChar(100)
+  id     String @id @default(uuid())
+  name   String @db.VarChar(100)
+  userId String @map("user_id")
+
+  admin User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   groupUsers GroupUser[]
 
   @@map("groups")
@@ -119,8 +124,8 @@ model GroupUser {
   groupId String @map("group_id")
   userId  String @map("user_id")
 
-  Group Group @relation(fields: [groupId], references: [id])
-  User  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([groupId, userId])
   @@index([groupId, userId])

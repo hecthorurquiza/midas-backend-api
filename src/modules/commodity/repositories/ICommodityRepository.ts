@@ -4,6 +4,7 @@ export interface IFindOneCommodity {
   id?: string
   name?: string
   code?: string
+  userId?: string
 }
 
 export interface ICommodityRepository {

@@ -5,8 +5,8 @@ import { IUpdateSiteRequestDTO, IUpdateSiteResponseDTO } from './UpdateSiteDTO'
 export class UpdateSiteUseCase {
   constructor(private readonly siteRepository: ISiteRepository) {}
 
-  async execute(id: string, data: IUpdateSiteRequestDTO): Promise<IUpdateSiteResponseDTO> {
-    const site = await this.validateData(id, data)
+  async execute(id: string, userId: string, data: IUpdateSiteRequestDTO): Promise<IUpdateSiteResponseDTO> {
+    const site = await this.validateData(id, userId, data)
     await this.updateSite(site, data)
 
     return {
@@ -17,11 +17,11 @@ export class UpdateSiteUseCase {
     }
   }
 
-  private async validateData(id: string, data: IUpdateSiteRequestDTO) {
+  private async validateData(id: string, userId: string, data: IUpdateSiteRequestDTO) {
     const [site, nameAlreadyExists, urlAlreadyExists] = await Promise.all([
       this.siteRepository.findOne({ id }),
-      this.siteRepository.findOne({ name: data.name }),
-      this.siteRepository.findOne({ urlAddress: data.url_address })
+      this.siteRepository.findOne({ name: data.name, userId}),
+      this.siteRepository.findOne({ urlAddress: data.url_address, userId })
     ])
 
     if (!site) throw new Error(`Site de id = ${id} não encontrado`)

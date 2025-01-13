@@ -4,6 +4,7 @@ export interface IFindOneStrategy {
   id?: string
   name?: string
   commodityId?: string
+  userId?: string
 }
 
 export interface IStrategyRepository {

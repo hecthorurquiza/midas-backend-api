@@ -22,7 +22,7 @@ export class CreateTokenUseCase {
 
   private async validateData(data: ICreateTokenRequestDTO) {
     const [token, user] = await Promise.all([
-      this.tokenRepository.findOne({ token: data.token }),
+      this.tokenRepository.findOne({ token: data.token, userId: data.user_id }),
       this.userRepository.findOne({ id: data.user_id })
     ])
 

@@ -3,6 +3,7 @@ import { Token } from '../entities/Token'
 export interface IFindOneToken {
   id?: string
   token?: string
+  userId?: string
 }
 
 export interface ITokenRepository {

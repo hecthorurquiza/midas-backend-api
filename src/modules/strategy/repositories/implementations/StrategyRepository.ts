@@ -1,6 +1,7 @@
 import { prismaClient } from '~/utils/prismaClient'
 import { Strategy } from '../../entities/Strategy'
 import { IFindOneStrategy, IStrategyRepository } from '../IStrategyRepository'
+import { Commodity } from '~/modules/commodity/entities/Commodity'
 
 export class StrategyRepository implements IStrategyRepository {
   async create(data: Strategy): Promise<Strategy | null> {
@@ -21,7 +22,8 @@ export class StrategyRepository implements IStrategyRepository {
             { id: data.id },
             { name: data.name },
             { commodityId: data.commodityId },
-          ]
+          ],
+          userId: data.userId
         }
       })
 
@@ -37,9 +39,12 @@ export class StrategyRepository implements IStrategyRepository {
     try {
       const strategies = await prismaClient.strategy.findMany({
         where: { userId },
-        include: { Commodity: true }
+        include: { commodity: true }
       })
-      return strategies.map(strategy => new Strategy(strategy))
+      return strategies.map(strategy => new Strategy({
+        ...strategy,
+        commodity: new Commodity(strategy.commodity)
+      }))
     }
     catch (error: any) {
       console.error(error.message)

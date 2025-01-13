@@ -5,7 +5,7 @@ export class Strategy {
   public name: string
   public commodityId: string
   public userId: string
-  public Commodity: Commodity
+  public commodity: Commodity
 
   constructor(data: Partial<Strategy>) {
     Object.assign(this, data)

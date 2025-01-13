@@ -20,7 +20,8 @@ export class TokenRepository implements ITokenRepository {
           OR: [
             { id: data.id },
             { token: data.token }
-          ]
+          ],
+          userId: data.userId
         }
       })
 

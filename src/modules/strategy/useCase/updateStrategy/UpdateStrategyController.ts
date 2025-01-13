@@ -9,6 +9,7 @@ export class UpdateStrategyController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
+    const { userId } = req.query
     const bodyReq = req.body as IUpdateStrategyRequestDTO
 
     if (!bodyReq.name) return badRequest(res, 'Nome é obrigatório')
@@ -17,7 +18,7 @@ export class UpdateStrategyController {
     if (!bodyReq.tokens_ids || bodyReq.tokens_ids.length === 0) return badRequest(res, 'Pelo menos um token é obrigatório')
 
     try {
-      const strategy = await this.updateStrategyUseCase.execute(id, {
+      const strategy = await this.updateStrategyUseCase.execute(id, userId as string, {
         ...bodyReq,
         name: toTitleCase(bodyReq.name),
       })

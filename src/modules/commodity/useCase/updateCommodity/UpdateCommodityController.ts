@@ -8,13 +8,14 @@ export class UpdateCommodityController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
+    const { userId } = req.query
     const bodyReq = req.body as IUpdateCommodityRequestDTO
 
     if (!bodyReq.name) return badRequest(res, 'Nome é obrigatório')
     if (!bodyReq.code) return badRequest(res, 'Código é obrigatório')
 
     try {
-      const commodity = await this.updateCommodityUseCase.execute(id, {
+      const commodity = await this.updateCommodityUseCase.execute(id, userId as string, {
         name: bodyReq.name.toUpperCase(),
         code: bodyReq.code.toUpperCase()
       })

@@ -37,8 +37,8 @@ export class CreateStrategyUseCase {
     const [commodity, user, nameAlreadyExist, commodityAlreadyExist] = await Promise.all([
       this.commodityRepository.findOne({ id: data.commodity_id }),
       this.userRepository.findOne({ id: data.user_id }),
-      this.strategyRepository.findOne({ name: data.name }),
-      this.strategyRepository.findOne({ commodityId: data.commodity_id }),
+      this.strategyRepository.findOne({ name: data.name, userId: data.user_id }),
+      this.strategyRepository.findOne({ commodityId: data.commodity_id, userId: data.user_id }),
     ])
 
     if (!commodity) throw new Error(`Commodity de id = ${data.commodity_id} não encontrado`)

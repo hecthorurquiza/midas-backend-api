@@ -17,8 +17,8 @@ export class UpdateStrategyUseCase {
     private readonly tokenRepository: ITokenRepository
   ) {}
 
-  async execute(strategyId: string, data: IUpdateStrategyRequestDTO): Promise<IUpdateStrategyResponseDTO> {
-    const { strategy } = await this.validateData(strategyId, data)
+  async execute(strategyId: string, userId: string, data: IUpdateStrategyRequestDTO): Promise<IUpdateStrategyResponseDTO> {
+    const { strategy } = await this.validateData(strategyId, userId, data)
     await this.updateStrategy(strategy, data)
     await this.deleteOldData(strategyId)
     await this.createNewRalationShips(strategyId, data)
@@ -30,11 +30,11 @@ export class UpdateStrategyUseCase {
     }
   }
 
-  private async validateData(strategyId: string, data: IUpdateStrategyRequestDTO) {
+  private async validateData(strategyId: string, userId: string, data: IUpdateStrategyRequestDTO) {
     const [strategy, nameAlreadyExists, commodityAlreadyExists, commodity] = await Promise.all([
       this.strategyRepository.findOne({ id: strategyId }),
-      this.strategyRepository.findOne({ name: data.name }),
-      this.strategyRepository.findOne({ commodityId: data.commodity_id }),
+      this.strategyRepository.findOne({ name: data.name, userId }),
+      this.strategyRepository.findOne({ commodityId: data.commodity_id, userId }),
       this.commodityRepository.findOne({ id: data.commodity_id })
     ])
 

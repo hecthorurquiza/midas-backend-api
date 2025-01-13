@@ -9,16 +9,18 @@ export class UpdateSiteController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
+    const { userId } = req.query
     const bodyReq = req.body as IUpdateSiteRequestDTO
 
     if (!bodyReq.name) return badRequest(res, 'Nome é obrigatório')
     if (!bodyReq.url_address) return badRequest(res, 'URL é obrigatória')
+    if (!userId) return badRequest(res, 'ID do usuário é obrigatório')
 
     const isValidUrl = validateUrl(bodyReq.url_address)
     if (!isValidUrl) return badRequest(res, 'URL inválida')
 
     try {
-      const site = await this.updateSiteUseCase.execute(id, {
+      const site = await this.updateSiteUseCase.execute(id, userId as string, {
         ...bodyReq,
         name: bodyReq.name.toUpperCase()
       })
