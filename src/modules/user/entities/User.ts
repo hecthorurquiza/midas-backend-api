@@ -5,6 +5,8 @@ export class User {
   public email: string
   public phone: string
   public password: string
+  public code: string | null
+  public expireIn: Date | null
 
   constructor(data: Partial<User>) {
     Object.assign(this, data)
