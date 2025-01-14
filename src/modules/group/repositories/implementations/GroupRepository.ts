@@ -33,4 +33,17 @@ export class GroupRepository implements IGroupRepository{
       return null
     }
   }
+  async update(data: Group): Promise<boolean> {
+    try {
+      await prismaClient.group.update({
+        where: { id: data.id },
+        data: { name: data.name }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
