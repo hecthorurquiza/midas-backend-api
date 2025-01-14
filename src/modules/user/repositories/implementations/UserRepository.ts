@@ -31,4 +31,17 @@ export class UserRepository implements IUserRepository {
       return null
     }
   }
+  async saveCode(id: string, code: string, expireDate: Date): Promise<boolean> {
+    try {
+      await prismaClient.user.update({
+        where: { id },
+        data: { code, expireIn: expireDate }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
