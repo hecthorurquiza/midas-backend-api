@@ -20,6 +20,10 @@ export function unauthorized(res: Response) {
   return res.status(401).send()
 }
 
+export function forbidden(res: Response, message: string) {
+  return res.status(403).json({ error: message })
+}
+
 export function notFound(res: Response, message: string) {
   return res.status(404).json({ error: message })
 }
