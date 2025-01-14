@@ -6,4 +6,8 @@ export class Group {
   constructor(data: Partial<Group>) {
     Object.assign(this, data)
   }
+
+  update(name: string) {
+    this.name = name
+  }
 }
