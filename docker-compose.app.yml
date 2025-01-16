@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:14-alpine3.20
+    container_name: midas_db
+    environment:
+      POSTGRES_USER: user  
+      POSTGRES_PASSWORD: mysecretpassword  
+      POSTGRES_DB: midasdockerdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - midas_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: midas-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  
+volumes:
+  midas_data:

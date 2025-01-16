@@ -2,3 +2,6 @@ node_modules
 docker-compose.yml
 Dockerfile
 .dist
+.dockerignore
+eslitn*.mjs
+.gitignore
