@@ -17,11 +17,3 @@ export function getDatePlus5Minutes() {
   const mountReceived = `${currentDate}T${currentTimeSplit[0]}.000Z`
   return DateTime.fromISO(mountReceived).toJSDate()
 }
-
-export function getDifferenceInMinutes(date1: Date, date2: Date) {
-  const differenceInMilliseconds = date1.getTime() - date2.getTime()
-  const seconds = Math.floor(differenceInMilliseconds / 1000)
-  const minutes = Math.floor(seconds / 60)
-
-  return minutes
-}

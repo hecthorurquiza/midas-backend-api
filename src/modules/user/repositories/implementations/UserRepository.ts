@@ -44,4 +44,17 @@ export class UserRepository implements IUserRepository {
       return false
     }
   }
+  async changePassword(email: string, password: string): Promise<boolean> {
+    try {
+      await prismaClient.user.update({
+        where: { email },
+        data: { password }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
 }
