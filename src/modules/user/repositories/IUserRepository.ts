@@ -10,4 +10,5 @@ export interface IUserRepository {
   create(data: User): Promise<User | null>
   findOne(data: IFindUser): Promise<User | null>
   saveCode(id: string, code: string, expireDate: Date): Promise<boolean>
+  changePassword(email: string, password: string): Promise<boolean>
 }
