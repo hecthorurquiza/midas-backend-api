@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules src/server.ts",
-    "lint": "eslint src/*.{ts,json}",
-    "start": "prisma migrate dev && prisma db seed && npm run dev"
+    "dev": "tsnd -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules --env-file=.env src/server.ts",
+    "lint": "eslint src/*.{ts,json}"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -16,9 +15,15 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "4.17.12",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^22.9.1",
+    "@types/nodemailer": "^6.4.17",
+    "@types/swagger-ui-express": "^4.1.7",
     "eslint": "^9.15.0",
     "prettier": "^2.7.1",
     "prisma": "^5.22.0",
@@ -30,7 +35,13 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.5.0",
+    "nodemailer": "^6.9.16",
+    "swagger-ui-express": "^5.0.1"
   }
 }
