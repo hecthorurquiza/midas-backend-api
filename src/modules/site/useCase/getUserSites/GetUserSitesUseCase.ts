@@ -31,7 +31,8 @@ export class GetUserSitesUseCase {
   private mapSites(sites: Site[]) {
     return sites.map(site => ({
       id: site.id,
-      name: site.name
+      name: site.name,
+      url : site.urlAddress
     }))
   }
 }
