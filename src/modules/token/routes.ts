@@ -4,6 +4,7 @@ import { createTokenController } from './useCase/createToken'
 import { getUserTokensController } from './useCase/getUserTokens'
 import { updateTokenController } from './useCase/updateToken'
 import { deleteTokenController } from './useCase/deleteToken'
+import { getTokenController } from './useCase/getToken'
 
 const router = Router()
 
@@ -13,6 +14,10 @@ router.post('/', validateToken,
 
 router.get('/', validateToken,
   (req, res) => getUserTokensController.handle(req, res)
+)
+
+router.get('/:id', validateToken,
+  (req, res) => getTokenController.handle(req, res)
 )
 
 router.put('/:id', validateToken,

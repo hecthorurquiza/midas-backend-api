@@ -4,6 +4,7 @@ import { createStrategyController } from './useCase/createStrategy'
 import { getUserStrategiesController } from './useCase/getUserStrategies'
 import { updateStrategyController } from './useCase/updateStrategy'
 import { deleteStrategyController } from './useCase/deleteStrategy'
+import { getStrategyController } from './useCase/getStrategy'
 
 const router = Router()
 
@@ -13,6 +14,10 @@ router.post('/', validateToken,
 
 router.get('/', validateToken,
   (req, res) => getUserStrategiesController.handle(req, res)
+)
+
+router.get('/:id', validateToken,
+  (req, res) => getStrategyController.handle(req, res)
 )
 
 router.put('/:id', validateToken,

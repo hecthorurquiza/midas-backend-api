@@ -4,6 +4,7 @@ import { createSiteController } from './useCase/createSite'
 import { getUserSitesController } from './useCase/getUserSites'
 import { updateSiteController } from './useCase/updateSite'
 import { deleteSiteController } from './useCase/deleteSite'
+import { getSiteController } from './useCase/getSite'
 
 const router = Router()
 
@@ -13,6 +14,10 @@ router.post('/', validateToken,
 
 router.get('/', validateToken,
   (req, res) => getUserSitesController.handle(req, res)
+)
+
+router.get('/:id', validateToken,
+  (req, res) => getSiteController.handle(req, res)
 )
 
 router.put('/:id', validateToken,
