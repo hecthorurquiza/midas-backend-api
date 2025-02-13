@@ -6,6 +6,7 @@ export class Strategy {
   public commodity: Commodity
   public commodityId: string
   public userId: string
+  public isActivated: boolean
 
   constructor(data: Partial<Strategy>) {
     Object.assign(this, data)
