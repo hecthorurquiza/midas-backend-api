@@ -1,25 +1,25 @@
 import { IStrategyRepository } from '../../repositories/IStrategyRepository'
 import { IStrategySiteRepository } from '../../repositories/IStrategySiteRepository'
 import { IStrategyTokenRepository } from '../../repositories/IStrategyTokenRepository'
-import { IGetStrategyResponseDTO } from './GetStrategyDTO'
+import { IGetActivatedStrategyResponseDTO } from './GetActivatedStrategyDTO'
 
-export class GetStrategyUseCase {
+export class GetActivatedStrategyUseCase {
   constructor(
     private readonly strategyRepository: IStrategyRepository,
     private readonly strategySiteRepository: IStrategySiteRepository,
     private readonly strategyTokenRepository: IStrategyTokenRepository
   ) {}
 
-  async execute(strategyId: string): Promise<IGetStrategyResponseDTO> {
-    const strategy = await this.strategyRepository.findOne({ id: strategyId })
-    if (!strategy) throw new Error(`Estratégia de id = ${strategyId} não encontrada`)
+  async execute(userId: string): Promise<IGetActivatedStrategyResponseDTO> {
+    const strategy = await this.strategyRepository.findUserActivatedStrategy(userId)
+    if (!strategy) throw new Error('Nenhuma estratégia ativa encontrada para o usuário')
 
     const [strategySites, strategyTokens] = await Promise.all([
-      this.strategySiteRepository.findManyByStrategyId(strategyId),
-      this.strategyTokenRepository.findManyByStrategyId(strategyId)
+      this.strategySiteRepository.findManyByStrategyId(strategy.id),
+      this.strategyTokenRepository.findManyByStrategyId(strategy.id)
     ])
-    if (!strategySites) throw new Error(`Sites da estratégia de id = ${strategyId} não encontrados`)
-    if (!strategyTokens) throw new Error(`Tokens da estratégia de id = ${strategyId} não encontrados`)
+    if (!strategySites) throw new Error(`Sites da estratégia de id = ${strategy.id} não encontrados`)
+    if (!strategyTokens) throw new Error(`Tokens da estratégia de id = ${strategy.id} não encontrados`)
 
     return {
       id: strategy.id,
