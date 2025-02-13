@@ -51,6 +51,20 @@ export class StrategyRepository implements IStrategyRepository {
       return null
     }
   }
+  async findUserActivatedStrategy(userId: string): Promise<Strategy | null> {
+    try {
+      const strategy = await prismaClient.strategy.findFirst({
+        where: { userId, isActivated: true },
+      })
+
+      if (!strategy) return null
+      return new Strategy(strategy)
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return null
+    }
+  }
   async update(data: Strategy): Promise<boolean> {
     try {
       await prismaClient.strategy.update({
@@ -59,6 +73,19 @@ export class StrategyRepository implements IStrategyRepository {
           name: data.name,
           commodityId: data.commodityId
         }
+      })
+      return true
+    }
+    catch (error: any) {
+      console.error(error.message)
+      return false
+    }
+  }
+  async updateStrategyStatus(id: string, isActivated: boolean): Promise<boolean> {
+    try {
+      await prismaClient.strategy.update({
+        where: { id },
+        data: { isActivated }
       })
       return true
     }

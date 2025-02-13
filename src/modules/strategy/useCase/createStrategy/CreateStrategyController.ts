@@ -28,6 +28,7 @@ export class CreateStrategyController {
     catch (error: any) {
       if (error.message.includes('não encontrado')) return notFound(res, error.message)
       if (error.message.includes('já registrado')) return conflict(res, error.message)
+      if (error.message.includes('não pertence')) return badRequest(res, error.message)
       return internalServerError(res, error.message)
     }
   }

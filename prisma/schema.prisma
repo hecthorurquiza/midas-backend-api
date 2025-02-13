@@ -72,10 +72,11 @@ model Token {
 }
 
 model Strategy {
-  id          String @id @default(uuid())
-  name        String @db.VarChar(100)
-  commodityId String @map("commodity_id")
-  userId      String @map("user_id")
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(100)
+  commodityId String  @map("commodity_id")
+  userId      String  @map("user_id")
+  isActivated Boolean @default(false) @map("is_activated")
 
   commodity      Commodity       @relation(fields: [commodityId], references: [id], onDelete: Cascade)
   user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
