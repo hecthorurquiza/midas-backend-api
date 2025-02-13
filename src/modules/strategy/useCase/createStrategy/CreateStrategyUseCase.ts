@@ -51,6 +51,7 @@ export class CreateStrategyUseCase {
         data.sites_ids.map(async (siteId) => {
           const site = await this.siteRepository.findOne({ id: siteId })
           if (!site) throw new Error(`Site de id = ${siteId} não encontrado`)
+          if (site.userId !== data.user_id) throw new Error(`Site de id = ${siteId} não pertence ao usuário`)
           return site
         })
       ),
@@ -58,6 +59,7 @@ export class CreateStrategyUseCase {
         data.tokens_ids.map(async (tokenId) => {
           const token = await this.tokenRepository.findOne({ id: tokenId })
           if (!token) throw new Error(`Token de id = ${tokenId} não encontrado`)
+          if (token.userId !== data.user_id) throw new Error(`Token de id = ${tokenId} não pertence ao usuário`)
           return token
         })
       )

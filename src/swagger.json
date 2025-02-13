@@ -1760,6 +1760,77 @@
       }
     },
     "/strategy/{id}": {
+      "get": {
+        "summary": "Obter uma estratégia",
+        "description": "Retorna uma estratégia específica com base em seu ID",
+        "tags": ["Strategy"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path", 
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da estratégia"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "commodity_id": { "type": "string" },
+                    "sites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string" },
+                          "url": { "type": "string" }
+                        }
+                      }
+                    },
+                    "tokens": {
+                      "type": "array", 
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "token": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "summary": "Atualizar uma estratégia",
         "description": "Atualiza uma estratégia existente no sistema com base em seu ID",
