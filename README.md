@@ -28,5 +28,13 @@ Na raiz do projeto deverá haver um arquivo .env com as seguintes variáveis. *(
    Após ativar o contâiner é necessário subir as migrations para sincronizar as tabelas do banco de dados.
 
    ```
-   docker exec -it midas-backend npx prisma migrate dev
+   docker exec -it midas-backend yarn prisma migrate dev
+   ```
+
+3. **Rode o comando para popular o banco de dados**
+
+   Assim que sincronizar o banco de dados com as migrations, caso o arquivo seed.ts não seja executado automaticamente, utilize o seguinte comando.
+   
+   ```
+   docker exec -it midas-backend yarn prisma db seed
    ```
